@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>準提神咒 最終完整修持助手</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📿 準提神咒 修持助手</h1>
+
+        <div class="section">
+            <button class="test-btn" onclick="playChime()">🔊 測試音效 (清脆引磬)</button>
+        </div>
+
+        <div class="section">
+            <button onclick="startRitual()">🔔 開始開咒偈 (含前後引磬)</button>
+        </div>
+
+        <div class="counter-box">
+            <div class="small-text">終身累計總數</div>
+            <div class="counter-num" id="totalCountDisplay">0</div>
+            <button onclick="importData()" class="edit-btn">✏️ 導入/修改數據</button>
+            <div id="milestoneText" class="milestone">目標：10 萬遍</div>
+        </div>
+
+        <div class="section">
+            <div class="cal-title">📅 本月精進日曆</div>
+            <div class="calendar-grid" id="calendar"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
