@@ -3,33 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>準提神咒 最終完整修持助手</title>
+    <title>準提神咒 精進修持助手</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>📿 準提神咒 修持助手</h1>
 
-        <div class="section">
-            <button class="test-btn" onclick="playChime()">🔊 測試音效 (清脆引磬)</button>
+<div class="container">
+    <h1>📿 準提神咒 精進修持助手</h1>
+
+    <audio id="nativeAudio" playsinline style="display: none;"></audio>
+
+    <div class="section" style="background: #fff5f5; border-left-color: var(--accent-color);">
+        <div class="section-title" style="color: var(--accent-color);">🎙️ 準備工作：現場法音錄製</div>
+        <button id="recordBtn" class="btn-record">🔴 開始錄製一句準提咒</button>
+        <div id="recordStatus" class="status-tag" style="font-size:12px; text-align:center; color:#777; margin-top:5px;">尚未錄音</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">① 開咒偈</div>
+        <div class="gatha-text">稽首皈依蘇悉帝，</div>
+        <div class="gatha-text">頭面頂禮七俱胝，</div>
+        <div class="gatha-text">我今稱讚大準提，</div>
+        <div class="gatha-text">惟願慈悲垂加護。</div>
+        <button class="btn-gatha-chime" onclick="playChimeSound()">🔔 鳴磬一聲 (準備持誦)</button>
+    </div>
+
+    <div class="section">
+        <div class="section-title">② 準提咒文</div>
+        <div class="mantra-block">
+            <div class="mantra-sanskrit">नमः सप्तानाम् samyaksambuddha koṭīnām tadyathā</div>
+            <div class="mantra-roman">namaḥ saptānām samyaksambuddha koṭīnām tadyathā</div>
+            <div class="mantra-chinese">南無 颯哆喃 三藐三勃陀 俱胝喃 怛姪他</div>
         </div>
-
-        <div class="section">
-            <button onclick="startRitual()">🔔 開始開咒偈 (含前後引磬)</button>
-        </div>
-
-        <div class="counter-box">
-            <div class="small-text">終身累計總數</div>
-            <div class="counter-num" id="totalCountDisplay">0</div>
-            <button onclick="importData()" class="edit-btn">✏️ 導入/修改數據</button>
-            <div id="milestoneText" class="milestone">目標：10 萬遍</div>
-        </div>
-
-        <div class="section">
-            <div class="cal-title">📅 本月精進日曆</div>
-            <div class="calendar-grid" id="calendar"></div>
+        <div class="mantra-block">
+            <div class="mantra-sanskrit">ॐ चले चुле चुन्दी स्वाहा</div>
+            <div class="mantra-roman">oṃ cale cule cundī svāhā</div>
+            <div class="mantra-chinese">唵 折隸 主隸 準提 娑婆訶</div>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <div class="section">
+        <div class="section-title">⚙️ 精進修持配置</div>
+        <div class="config-grid">
+            <div class="input-group">
+                <label for="bgMusicSelect">🎵 背景音效環境 (切換可試聽)：</label>
+                <select id="bgMusicSelect">
+                    <option value="none">無背景音樂</option>
+                    <option value="muyu" selected>🎧 靜心沉穩木魚 (大音量版)</option>
+                    <option value="assembly">👥 萬人法會共修 (大殿雄厚共鳴)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="speedSelect">⚡ 專注連播間隔：</label>
+                <select id="speedSelect">
+                    <option value="100" selected>0.1 秒 (極速緊湊) ✨</option>
+                    <option value="500">0.5 秒 (流暢法速)</option>
+                    <option value="1000">1.0 秒 (標準沉穩)</option>
+                    <option value="2000">2.0 秒 (從容安詳)</option>
+                    <option value="3000">3.0 秒 (初學攝心)</option>
+                </select>
+            </div>
+        </div>
+        <div class="config-grid">
+            <div class="input-group">
+                <label for="alertInterval">⏱️ 防分心警策提醒間隔：</label>
+                <select id="alertInterval">
+                    <option value="0">不開啟提醒</option>
+                    <option value="3">每隔 3 遍 (測試專用)</option>
+                    <option value="7">每隔 7 遍</option>
+                    <option value="9">每隔 9 遍</option>
+                    <option value="21">每隔 21 遍提醒</option>
+                    <option value="49" selected>每隔 49 遍提醒</option>
+                    <option value="108">每隔 108 遍提醒</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>🔁 結課模式：</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="mode" value="target" checked> 定量</label>
+                    <label><input type="radio" name="mode" value="infinite"> 無限</label>
+                </div>
+            </div>
+        </div>
+        <div id="targetCountDiv" class="input-group">
+            <label for="targetCount">本次修持目標：</label>
+            <select id="targetCount">
+                <option value="10">10 次</option>
+                <option value="21">21 次</option>
+                <option value="49">49 次</option>
+                <option value="108" selected>108 次</option>
+                <option value="1000">1000 次</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn-start" id="startBtn" disabled>▶️ 開始自動持誦</button>
+        <button class="btn-stop" id="stopBtn" disabled>⏸️ 暫停/停止</button>
+    </div>
+
+    <button class="btn-manual-count" id="manualCountBtn">✨ 手動點擊持誦 (清脆引磬計數+1)</button>
+
+    <div class="section" style="background: #fff; border-left-color: #ccad00;">
+        <div class="section-title" style="color: #ccad00;">📊 本次持誦與終身功德累計</div>
+        <div class="counter-grid">
+            <div class="counter-box">
+                <div class="counter-label">本次功德計數</div>
+                <div class="counter-num" id="currentCount">0</div>
+                <div id="progressText" style="font-size:11px; color:#88px;">準備就緒</div>
+            </div>
+            <div class="counter-box total">
+                <div class="counter-label">🌟 終身累計總數量 🌟</div>
+                <div class="counter-num" id="totalCount">0</div>
+                <div id="milestoneTargetLabel" style="font-size:11px; color:#b28500; font-weight:bold;">目標里程碑：10 萬遍</div>
+            </div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+            <div class="progress-text" id="progressBarText">終身功德總進度: 0%</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">📖 準提經典功德經證 (增長信心)</div>
+        <div class="merit-guide">
+            <div class="merit-item"><span class="merit-title">【滿十萬遍】</span>得見諸佛菩薩，在夢中吐出黑物，消除宿世惡業重障。</div>
+            <div class="merit-item"><span class="merit-title">【滿二十萬遍】</span>夢見天界、諸仙，或夢見進入佛剎，見菩薩聽聞妙法。</div>
+            <div class="merit-item"><span class="merit-title">【滿百萬遍】</span>得蒙準提菩薩現身加持，清淨三業，現世福樂富足，往生淨土。</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">③ 功德迴向文</div>
+        <div class="input-group">
+            <div style="display:flex; gap:10px;">
+                <div style="flex:1;">
+                    <label for="userName">修持信士姓名：</label>
+                    <input type="text" id="userName" value="某某某">
+                </div>
+                <div style="flex:1;">
+                    <label for="targetObject">祈福迴向對象：</label>
+                    <input type="text" id="targetObject" value="累劫冤親債主">
+                </div>
+            </div>
+        </div>
+        <div class="dedication-list">
+            <div class="dedication-item">
+                <div class="dedication-label">例一：迴向準提鏡 (護衛家門)</div>
+                <div class="dedication-text" id="log-mirror"></div>
+                <button class="btn-chime" onclick="playChimeSound()">🔔 鳴磬迴向</button>
+            </div>
+            <div class="dedication-item">
+                <div class="dedication-label">例二：求消業增福 (消除業障)</div>
+                <div class="dedication-text" id="log-blessing"></div>
+                <button class="btn-chime" onclick="playChimeSound()">🔔 鳴磬迴向</button>
+            </div>
+            <div class="dedication-item">
+                <div class="dedication-label">例三：求學業 (金榜提名)</div>
+                <div class="dedication-text" id="log-academic"></div>
+                <button class="btn-chime" onclick="playChimeSound()">🔔 鳴磬迴向</button>
+            </div>
+            <div class="dedication-item">
+                <div class="dedication-label">例四：求人緣、婚戀 (人天敬愛)</div>
+                <div class="dedication-text" id="log-relationship"></div>
+                <button class="btn-chime" onclick="playChimeSound()">🔔 鳴磬迴向</button>
+            </div>
+            <div class="dedication-item">
+                <div class="dedication-label">例五：求財運 (財源富足)</div>
+                <div class="dedication-text" id="log-wealth"></div>
+                <button class="btn-chime" onclick="playChimeSound()">🔔 鳴磬迴向</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" style="border-left-color: #555;">
+        <div class="section-title" style="color: #555;">📅 準提每日修持精進日曆</div>
+        
+        <div class="calendar-header">
+            <button class="calendar-nav-btn" id="prevMonthBtn">◀</button>
+            <span id="calendarMonthLabel">2026 年 6 月</span>
+            <button class="calendar-nav-btn" id="nextMonthBtn">▶</button>
+        </div>
+        
+        <div class="calendar-grid" id="calendarGrid"></div>
+        
+        <div style="text-align: right; margin-top: 15px;">
+            <button id="clearHistoryBtn" style="padding: 4px 10px; font-size: 11px; width: auto; background: #eee; color: #333;">清除歷史紀錄</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast-alert" id="toastAlert">
+    <h3>✨ 正念警策提醒</h3>
+    <p id="alertMessage">請集中精神，收攝身心...</p>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
