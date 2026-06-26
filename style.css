@@ -1,0 +1,13 @@
+:root { --primary-color: #b8860b; --bg-color: #f5efe6; --text-color: #3d2514; --accent: #ccad00; }
+body { font-family: 'PingFang HK', 'Microsoft JhengHei', sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 20px; display: flex; flex-direction: column; align-items: center; }
+.container { max-width: 500px; width: 100%; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.section { margin-bottom: 15px; padding: 15px; background: #faf6f0; border-radius: 10px; border-left: 4px solid var(--primary-color); }
+button { width: 100%; padding: 12px; margin: 5px 0; border: none; border-radius: 8px; cursor: pointer; background: var(--primary-color); color: white; font-weight: bold; }
+.test-btn { background: #5c4033; }
+.counter-box { text-align: center; padding: 20px; background: #fffdf9; border: 1px solid var(--accent); border-radius: 10px; margin-bottom: 15px; }
+.counter-num { font-size: 40px; font-weight: bold; color: var(--primary-color); }
+.edit-btn { background: none; color: var(--primary-color); font-size: 12px; text-decoration: underline; }
+.milestone { margin-top: 10px; font-weight: bold; color: var(--accent); }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 10px; }
+.day { padding: 8px 0; text-align: center; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; background: #fff; }
+.has-practice { background: #fff9c4; border-color: #fbc02d; font-weight: bold; }
